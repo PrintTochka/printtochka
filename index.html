@@ -134,7 +134,7 @@
         .btn-vk {
             border-color: var(--vk-color);
             color: #fff;
-01:49
+02:08
 background: var(--vk-color);
         }
         .btn-vk:hover {
@@ -186,28 +186,11 @@ background: var(--vk-color);
             box-shadow: 0 10px 30px rgba(0, 240, 255, 0.05);
         }
 
-        /* Технологичная неоновая заглушка для фото */
-        .card-photo-placeholder {
+        .card-img {
             width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, #131c35 0%, #0d1324 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: rgba(0, 240, 255, 0.2);
+            height: 200px;
+            object-fit: cover;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-        }
-
-        .card-photo-placeholder::after {
-            content: '3D PRINT';
-            position: absolute;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: var(--point-color);
-            bottom: 15px;
-            opacity: 0.6;
         }
 
         .card-content {
@@ -276,8 +259,7 @@ background: var(--vk-color);
             border-radius: 6px;
             text-align: center;
             margin-bottom: 30px;
-01:49
-color: #e5e7eb;
+            color: #e5e7eb;
         }
 
         footer {
@@ -300,7 +282,8 @@ color: #e5e7eb;
 
     <!-- Шапка -->
     <header>
-        <div class="logo"><span class="print">Print</span> <span class="tochka">Точка</span></div>
+02:08
+<div class="logo"><span class="print">Print</span> <span class="tochka">Точка</span></div>
         <nav>
             <a href="#services">Каталог</a>
             <a href="#about">Условия</a>
@@ -324,10 +307,17 @@ color: #e5e7eb;
             
             <!-- Товар 1 -->
             <div class="card">
-                <div class="card-photo-placeholder">🐉 </div>
+                <img src="https://unsplash.com" class="card-img" alt="3D Игрушки">
                 <div class="card-content">
                     <h3>Подвижные 3D Игрушки</h3>
                     <p>Яркие гибкие драконы и роботы-антистресс из безопасного PLA пластика.</p>
-                    <a href="https://vk.ru" target="_blank" class="btn btn-vk" style="width: 100%;">Посмотреть в ВК</a>
+                    <a href="https://vk.com" target="_blank" class="btn btn-vk" style="width: 100%;">Посмотреть в ВК</a>
                 </div>
             </div>
+
+            <!-- Товар 2 -->
+            <div class="card">
+                <img src="https://unsplash.com" class="card-img" alt="Кашпо">
+                <div class="card-content">
+                    <h3>Геометрические кашпо</h3>
+                    <p>Стильный футуристичный декор для комнатных растений и уюта в вашем доме.</p>
