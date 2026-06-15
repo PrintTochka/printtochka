@@ -297,6 +297,7 @@ background: var(--vk-color);
     <header>
 <div class="logo"><span class="print">Print</span> <span class="tochka">Точка</span></div>
         <nav>
+           <span id="live-time" style="color: var(--accent-color); font-weight: bold; margin-right: 15px; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);">🕒 00:00:00</span>
             <a href="#services">Каталог</a>
             <a href="#about">Условия</a>
             <a href="#order">Заказать</a>
@@ -610,5 +611,15 @@ background: var(--vk-color);
                 icon.innerText = '✕';
             }
         }
+    // Функция для обновления времени в реальном времени
+        function updateClock() {
+            const now = new Date();
+            // Настройка времени строго по часовому поясу Хабаровска (UTC+10)
+            const khabarovskTime = now.toLocaleTimeString('ru-RU', { timeZone: 'Asia/Vladivostok' });
+            document.getElementById('live-time').innerHTML = '🕒 ' + khabarovskTime;
+        }
+        // Запускаем часы сразу и обновляем их каждую 1 секунду
+        setInterval(updateClock, 1000);
+        updateClock();
     </script></body>
 </html>
