@@ -306,9 +306,7 @@ background: var(--vk-color);
 
     <!-- Главный экран с интерактивной 3D-сеткой -->
     <section class="hero" style="position: relative; overflow: hidden; background: #080c16;">
-        <!-- Холст для анимированной сетки -->
         <canvas id="mesh-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4;"></canvas>
-        
         <div class="hero-content" style="position: relative; z-index: 1;">
             <h1><span class="brand">Print</span> <span class="brand-accent">Точка</span> в <span class="city">Хабаровске</span></h1>
             <p>Уникальные подарки, подвижные игрушки, дизайнерские кашпо и сувениры на свадьбу. Настоящая экологичная FDM 3D-печать.</p>
@@ -579,10 +577,27 @@ background: var(--vk-color);
 
     <!-- Скрипты FAQ и Контактов -->
     <script>
+        // 1. ФУНКЦИЯ ПЛАВНОЙ ПРОКРУТКИ МЕНЮ
+        function openOrder(serviceName) {
+            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 2. ФУНКЦИЯ ОБНОВЛЕНИЯ ВРЕМЕНИ (ХАБАРОВСК)
+        function updateClock() {
+            const now = new Date();
+            const khabarovskTime = now.toLocaleTimeString('ru-RU', { timeZone: 'Asia/Vladivostok' });
+            const clockElement = document.getElementById('live-time');
+            if (clockElement) {
+                clockElement.innerHTML = '🕒 ' + khabarovskTime;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 3. ФУНКЦИЯ ДЛЯ ОТКРЫТИЯ ВКЛАДОК FAQ (ВОПРОСОВ)
         function toggleFaq(button) {
             const answer = button.nextElementSibling;
             const icon = button.querySelector('.faq-icon');
-            
             if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
                 answer.style.maxHeight = '0px';
                 button.style.background = 'transparent';
@@ -591,17 +606,16 @@ background: var(--vk-color);
                 document.querySelectorAll('.faq-answer').forEach(el => el.style.maxHeight = '0px');
                 document.querySelectorAll('.faq-icon').forEach(el => el.style.transform = 'rotate(0deg)');
                 document.querySelectorAll('.faq-item button').forEach(el => el.style.background = 'transparent');
-                
                 answer.style.maxHeight = answer.scrollHeight + 'px';
                 button.style.background = 'rgba(255, 0, 127, 0.05)';
                 icon.style.transform = 'rotate(45deg)';
             }
         }
 
+        // 4. ФУНКЦИЯ ПЛАВАЮЩЕЙ КНОПКИ СВЯЗИ В УГЛУ
         function toggleContactsMenu() {
             const menu = document.getElementById('contacts-menu');
             const icon = document.getElementById('main-contact-icon');
-            
             if (menu.style.opacity === '1') {
                 menu.style.opacity = '0';
                 menu.style.transform = 'translateY(20px)';
@@ -614,26 +628,16 @@ background: var(--vk-color);
                 icon.innerText = '✕';
             }
         }
-    // Функция для обновления времени в реальном времени
-        function updateClock() {
-            const now = new Date();
-            // Настройка времени строго по часовому поясу Хабаровска (UTC+10)
-            const khabarovskTime = now.toLocaleTimeString('ru-RU', { timeZone: 'Asia/Vladivostok' });
-            document.getElementById('live-time').innerHTML = '🕒 ' + khabarovskTime;
-        }
-        // Запускаем часы сразу и обновляем их каждую 1 секунду
-        setInterval(updateClock, 1000);
-        updateClock();
-    / АНИМАЦИЯ 3D-СЕТКИ (ПОЛИГОНОВ) НА ГЛАВНОМ ЭКРАНЕ
+
+        // 5. АНИМАЦИЯ 3D-СЕТКИ НА ГЛАВНОМ ЭКРАНЕ
         const canvas = document.getElementById('mesh-canvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
             let points = [];
-            const maxPoints = 45; // Количество технологичных точек на экране
-            const maxDistance = 120; // Дистанция, при которой между точками натягивается лазерная линия
+            const maxPoints = 45;
+            const maxDistance = 120;
             let mouse = { x: null, y: null };
 
-            // Подстраиваем размер холста под экран
             function resizeCanvas() {
                 const heroSection = canvas.parentElement;
                 canvas.width = heroSection.offsetWidth;
@@ -642,79 +646,53 @@ background: var(--vk-color);
             window.addEventListener('resize', resizeCanvas);
             resizeCanvas();
 
-            // Создаем массив случайных технологичных узлов (точек)
             for (let i = 0; i < maxPoints; i++) {
                 points.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5, // Медленная скорость движения по X
-                    vy: (Math.random() - 0.5) * 0.5  // Медленная скорость движения по Y
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5
                 });
             }
 
-            // Отслеживаем мышку клиента, чтобы притягивать сетку
             window.addEventListener('mousemove', (e) => {
                 const rect = canvas.getBoundingClientRect();
                 mouse.x = e.clientX - rect.left;
                 mouse.y = e.clientY - rect.top;
             });
 
-            window.addEventListener('mouseleave', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
+            window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
 
-            // Главный цикл прорисовки кадра анимации
             function animateMesh() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Двигаем и рисуем узлы
                 points.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-
-                    // Отскок от виртуальных стен принтера
+                    p.x += p.vx; p.y += p.vy;
                     if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = '#00f0ff'; // Цвет светящихся узлов (бирюзовый неон)
-                    ctx.fill();
+05:17
+if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#00f0ff'; ctx.fill();
                 });
-
-                // Натягиваем лазерные нити между близкими узлами
                 for (let i = 0; i < points.length; i++) {
                     for (let j = i + 1; j < points.length; j++) {
                         const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
                         if (dist < maxDistance) {
-                            ctx.beginPath();
-                            ctx.moveTo(points[i].x, points[i].y);
-                            ctx.lineTo(points[j].x, points[j].y);
-                            // Чем ближе точки, тем ярче линия лазера
-                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / maxDistance})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
+                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y);
+                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / maxDistance})`; ctx.lineWidth = 0.5; ctx.stroke();
                         }
                     }
-
-                    // Связываем сетку с курсором мышки пользователя
                     if (mouse.x !== null && mouse.y !== null) {
                         const mouseDist = Math.hypot(points[i].x - mouse.x, points[i].y - mouse.y);
                         if (mouseDist < 150) {
-                            ctx.beginPath();
-                            ctx.moveTo(points[i].x, points[i].y);
-                            ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(255, 0, 127, ${0.4 * (1 - mouseDist / 150)})`; // Розовый неон "Точка" у курсора
-                            ctx.lineWidth = 0.8;
-                            ctx.stroke();
+                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(mouse.x, mouse.y);
+                            ctx.strokeStyle = `rgba(255, 0, 127, ${0.4 * (1 - mouseDist / 150)})`; ctx.lineWidth = 0.8; ctx.stroke();
                         }
-05:10
-}
+                    }
                 }
                 requestAnimationFrame(animateMesh);
             }
             animateMesh();
         }
-    </script></body>
+    </script>
+</body>
 </html>
