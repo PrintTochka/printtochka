@@ -453,5 +453,166 @@ background: var(--vk-color);
             document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
-</body>
+<!-- ======================================================== -->
+    <!-- БЛОК: ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ (FAQ) И КНОПКА СВЯЗИ -->
+    <!-- ======================================================== -->
+
+    <!-- Раздел FAQ (Вопросы и ответы) -->
+    <section id="faq" style="background: rgba(8, 12, 22, 0.5); padding-bottom: 100px; padding-top: 70px;">
+        <h2 style="text-align: center; font-size: 34px; margin-bottom: 45px; text-transform: uppercase; letter-spacing: 1px;">Часто задаваемые вопросы</h2>
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+            
+            <!-- Вопрос 1 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Безопасны ли ваши игрушки для маленьких детей?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Да, абсолютно! Мы печатаем детские игрушки исключительно из экологичного PLA-пластика. Этот материал производится из натурального сырья (кукурузного крахмала и сахарного тростника). Он гипоаллергенен, не имеет запаха и полностью безопасен при контакте с кожей.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 2 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Можно ли мыть кашпо водой и сажать туда живые растения?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Да, кашпо отлично подходят для суккулентов, кактусов и искусственных цветов. Пластик не боится влаги. Единственное правило для изделий из PLA — их не стоит мыть в очень горячей воде (выше 50°C) и ставить в посудомоечную машину, так как от высокой температуры пластик может деформироваться.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 3 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Насколько прочные изделия получаются на 3D-принтере?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+04:07
+<div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">FDM-печать создает очень прочные вещи благодаря правильной внутренней структуре (заполнению сеткой). Игрушки и кашпо легко выдерживают падения с высоты стола и активные детские игры. Однако намеренно пытаться согнуть тонкие подвижные элементы или бить по ним тяжелыми предметами все же не стоит.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 4 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Вы можете напечатать деталь по моей фотографии или сломанному оригиналу?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Да, мы занимаемся индивидуальной печатью. Фотографии бывает достаточно для простых декоративных вещей. Если же вам нужно воссоздать точную сломанную деталь (шестеренку, крепление, ручку), лучше всего передать нам ее остатки для снятия точных размеров и создания правильной цифровой 3D-модели.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 5 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Какие цвета пластика есть в наличии?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Палитра постоянно обновляется. В наличии всегда есть базовые цвета (белый, черный, ), яркие оттенки (красный, синий, зеленый, желтый), а также необычные премиум-пластики: «шелковый металлик» с красивым блеском, светящиеся в темноте материалы и «радужные хамелеоны», меняющие цвет в зависимости от угла обзора.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 6 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Сколько дней занимает изготовление заказа?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+04:07
+<div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Небольшие штучные заказы (один дракон или кашпо) мы обычно печатаем за 24–48 часов. Если вам нужен оптовый тираж, изготовление может занять от 3 до 7 дней. Точные сроки мы назовем сразу при обсуждении заказа в сообщениях.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 7 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+                <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Как рассчитывается стоимость доставки по Хабаровску?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Поскольку производство домашнее, фиксированной цены нет. Стоимость доставки зависит от удаленности вашего района (Центр, Южный, Северный, Овощесовхоз и т.д.). Мы рассчитываем её индивидуально по тарифам курьерских служб в момент готовности заказа. Также вы всегда можете забрать изделие самовывозом бесплатно.</p>
+                </div>
+            </div>
+
+            <!-- Вопрос 8 -->
+            <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
+             <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Есть ли скидки при оптовом или крупном заказе?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; padding: 0 20px; overflow: hidden; transition: all 0.3s ease; color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+                    <p style="padding-bottom: 20px;">Да! Для наших клиентов действует выгодное оптовое предложение. При заказе однотипных товаров тиражом от 50 штук (например, сувениров гостям на свадьбу, топперов или брелоков) мы предоставляем фиксированную скидку в размере 15% от общей стоимости вашего заказа.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ИНТЕРАКТИВНАЯ КНОПКА СВЯЗИ (Плавающая в углу) -->
+    <div id="sticky-contacts" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        
+        <!-- Меню кнопок мессенджеров -->
+        <div id="contacts-menu" style="display: flex; flex-direction: column; gap: 10px; transition: all 0.3s ease; opacity: 0; transform: translateY(20px); pointer-events: none;">
+            <!-- ВК -->
+            <a href="https://vk.ru/printtochka" target="_blank" title="Написать ВКонтакте" style="width: 50px; height: 50px; background: #0077ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,119,255,0.4);">ВК</a>
+            <!-- WhatsApp -->
+            <a href="https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NottDrs1Zdl5zCXVKZfok1rnYBfvLP2k8y5G7a8IbxK8lI" target="_blank" title="Написать в WhatsApp" style="width: 50px; height: 50px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(37,211,102,0.4);">WA</a>
+            <!-- Telegram -->
+            <a href="t.me/edinichni" target="_blank" title="Написать в Telegram" style="width: 50px; height: 50px; background: #0088cc; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,136,204,0.4);">ТГ</a>
+            <!-- Авито -->
+            <a href="https://www.avito.ru/user/ab72ac1dc9d0a8b2687816d490833580/profile?src=sharing" target="_blank" title="Открыть Авито" style="width: 50px; height: 50px; background: #98ce00; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(152,206,0,0.4);">АВ</a>
+        </div>
+        
+        <!-- Кнопка-переключатель -->
+04:15
+<button onclick="toggleContactsMenu()" style="width: 60px; height: 60px; background: var(--point-color); border: none; border-radius: 50%; color: white; font-weight: bold; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,0,127,0.6); outline: none; transition: transform 0.2s;">
+            <span id="main-contact-icon">💬 </span>
+        </button>
+    </div>
+
+    <!-- Скрипты FAQ и Контактов -->
+    <script>
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.faq-icon');
+            
+            if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
+                answer.style.maxHeight = '0px';
+                button.style.background = 'transparent';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                document.querySelectorAll('.faq-answer').forEach(el => el.style.maxHeight = '0px');
+                document.querySelectorAll('.faq-icon').forEach(el => el.style.transform = 'rotate(0deg)');
+                document.querySelectorAll('.faq-item button').forEach(el => el.style.background = 'transparent');
+                
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                button.style.background = 'rgba(255, 0, 127, 0.05)';
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        function toggleContactsMenu() {
+            const menu = document.getElementById('contacts-menu');
+            const icon = document.getElementById('main-contact-icon');
+            
+            if (menu.style.opacity === '1') {
+                menu.style.opacity = '0';
+                menu.style.transform = 'translateY(20px)';
+                menu.style.pointerEvents = 'none';
+                icon.innerText = '💬 ';
+            } else {
+                menu.style.opacity = '1';
+                menu.style.transform = 'translateY(0)';
+                menu.style.pointerEvents = 'auto';
+                icon.innerText = '✕';
+            }
+        }
+    </script></body>
 </html>
