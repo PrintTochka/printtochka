@@ -542,7 +542,7 @@ background: var(--vk-color);
 
             <!-- Вопрос 8 -->
             <div class="faq-item" style="background: var(--panel-bg); margin-bottom: 15px; border-radius: 6px; border-left: 3px solid var(--accent-color); overflow: hidden;">
-             <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+            <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
                     <span>Есть ли скидки при оптовом или крупном заказе?</span>
                     <span class="faq-icon" style="transition: transform 0.3s; color: var(--accent-color);">+</span>
                 </button>
@@ -577,12 +577,12 @@ background: var(--vk-color);
 
     <!-- Скрипты FAQ и Контактов -->
     <script>
-        // 1. ФУНКЦИЯ ПЛАВНОЙ ПРОКРУТКИ МЕНЮ
+        // 1. Прокрутка к разделу заказа
         function openOrder(serviceName) {
             document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 2. ФУНКЦИЯ ОБНОВЛЕНИЯ ВРЕМЕНИ (ХАБАРОВСК)
+        // 2. Работа часов в реальном времени
         function updateClock() {
             const now = new Date();
             const khabarovskTime = now.toLocaleTimeString('ru-RU', { timeZone: 'Asia/Vladivostok' });
@@ -594,7 +594,7 @@ background: var(--vk-color);
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 3. ФУНКЦИЯ ДЛЯ ОТКРЫТИЯ ВКЛАДОК FAQ (ВОПРОСОВ)
+        // 3. Открытие и закрытие вопросов (FAQ)
         function toggleFaq(button) {
             const answer = button.nextElementSibling;
             const icon = button.querySelector('.faq-icon');
@@ -603,16 +603,13 @@ background: var(--vk-color);
                 button.style.background = 'transparent';
                 icon.style.transform = 'rotate(0deg)';
             } else {
-                document.querySelectorAll('.faq-answer').forEach(el => el.style.maxHeight = '0px');
-                document.querySelectorAll('.faq-icon').forEach(el => el.style.transform = 'rotate(0deg)');
-                document.querySelectorAll('.faq-item button').forEach(el => el.style.background = 'transparent');
                 answer.style.maxHeight = answer.scrollHeight + 'px';
                 button.style.background = 'rgba(255, 0, 127, 0.05)';
                 icon.style.transform = 'rotate(45deg)';
             }
         }
 
-        // 4. ФУНКЦИЯ ПЛАВАЮЩЕЙ КНОПКИ СВЯЗИ В УГЛУ
+        // 4. Открытие плавающего меню контактов
         function toggleContactsMenu() {
             const menu = document.getElementById('contacts-menu');
             const icon = document.getElementById('main-contact-icon');
@@ -627,71 +624,6 @@ background: var(--vk-color);
                 menu.style.pointerEvents = 'auto';
                 icon.innerText = '✕';
             }
-        }
-
-        // 5. АНИМАЦИЯ 3D-СЕТКИ НА ГЛАВНОМ ЭКРАНЕ
-        const canvas = document.getElementById('mesh-canvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            let points = [];
-            const maxPoints = 45;
-            const maxDistance = 120;
-            let mouse = { x: null, y: null };
-
-            function resizeCanvas() {
-                const heroSection = canvas.parentElement;
-                canvas.width = heroSection.offsetWidth;
-                canvas.height = heroSection.offsetHeight;
-            }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            for (let i = 0; i < maxPoints; i++) {
-                points.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5
-                });
-            }
-
-            window.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                mouse.x = e.clientX - rect.left;
-                mouse.y = e.clientY - rect.top;
-            });
-
-            window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-
-            function animateMesh() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                points.forEach(p => {
-                    p.x += p.vx; p.y += p.vy;
-                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-05:17
-if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = '#00f0ff'; ctx.fill();
-                });
-                for (let i = 0; i < points.length; i++) {
-                    for (let j = i + 1; j < points.length; j++) {
-                        const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
-                        if (dist < maxDistance) {
-                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y);
-                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / maxDistance})`; ctx.lineWidth = 0.5; ctx.stroke();
-                        }
-                    }
-                    if (mouse.x !== null && mouse.y !== null) {
-                        const mouseDist = Math.hypot(points[i].x - mouse.x, points[i].y - mouse.y);
-                        if (mouseDist < 150) {
-                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(mouse.x, mouse.y);
-                            ctx.strokeStyle = `rgba(255, 0, 127, ${0.4 * (1 - mouseDist / 150)})`; ctx.lineWidth = 0.8; ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(animateMesh);
-            }
-            animateMesh();
         }
     </script>
 </body>
