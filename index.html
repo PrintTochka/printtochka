@@ -304,12 +304,15 @@ background: var(--vk-color);
         </nav>
     </header>
 
-    <!-- Главный экран -->
-    <section class="hero">
-        <div class="hero-content">
+    <!-- Главный экран с интерактивной 3D-сеткой -->
+    <section class="hero" style="position: relative; overflow: hidden; background: #080c16;">
+        <!-- Холст для анимированной сетки -->
+        <canvas id="mesh-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4;"></canvas>
+        
+        <div class="hero-content" style="position: relative; z-index: 1;">
             <h1><span class="brand">Print</span> <span class="brand-accent">Точка</span> в <span class="city">Хабаровске</span></h1>
             <p>Уникальные подарки, подвижные игрушки, дизайнерские кашпо и сувениры на свадьбу. Настоящая экологичная FDM 3D-печать.</p>
-            <a href="https://vk.ru/printtochka">Открыть товары</a>
+            <a href="#services" class="btn btn-vk">Открыть товары</a>
         </div>
     </section>
 
@@ -621,5 +624,97 @@ background: var(--vk-color);
         // Запускаем часы сразу и обновляем их каждую 1 секунду
         setInterval(updateClock, 1000);
         updateClock();
+    / АНИМАЦИЯ 3D-СЕТКИ (ПОЛИГОНОВ) НА ГЛАВНОМ ЭКРАНЕ
+        const canvas = document.getElementById('mesh-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let points = [];
+            const maxPoints = 45; // Количество технологичных точек на экране
+            const maxDistance = 120; // Дистанция, при которой между точками натягивается лазерная линия
+            let mouse = { x: null, y: null };
+
+            // Подстраиваем размер холста под экран
+            function resizeCanvas() {
+                const heroSection = canvas.parentElement;
+                canvas.width = heroSection.offsetWidth;
+                canvas.height = heroSection.offsetHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Создаем массив случайных технологичных узлов (точек)
+            for (let i = 0; i < maxPoints; i++) {
+                points.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5, // Медленная скорость движения по X
+                    vy: (Math.random() - 0.5) * 0.5  // Медленная скорость движения по Y
+                });
+            }
+
+            // Отслеживаем мышку клиента, чтобы притягивать сетку
+            window.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            // Главный цикл прорисовки кадра анимации
+            function animateMesh() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Двигаем и рисуем узлы
+                points.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    // Отскок от виртуальных стен принтера
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#00f0ff'; // Цвет светящихся узлов (бирюзовый неон)
+                    ctx.fill();
+                });
+
+                // Натягиваем лазерные нити между близкими узлами
+                for (let i = 0; i < points.length; i++) {
+                    for (let j = i + 1; j < points.length; j++) {
+                        const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+                        if (dist < maxDistance) {
+                            ctx.beginPath();
+                            ctx.moveTo(points[i].x, points[i].y);
+                            ctx.lineTo(points[j].x, points[j].y);
+                            // Чем ближе точки, тем ярче линия лазера
+                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / maxDistance})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Связываем сетку с курсором мышки пользователя
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const mouseDist = Math.hypot(points[i].x - mouse.x, points[i].y - mouse.y);
+                        if (mouseDist < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(points[i].x, points[i].y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.strokeStyle = `rgba(255, 0, 127, ${0.4 * (1 - mouseDist / 150)})`; // Розовый неон "Точка" у курсора
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+05:10
+}
+                }
+                requestAnimationFrame(animateMesh);
+            }
+            animateMesh();
+        }
     </script></body>
 </html>
