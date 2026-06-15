@@ -306,7 +306,7 @@ background: var(--vk-color);
 
     <!-- Главный экран с интерактивной 3D-сеткой -->
     <section class="hero" style="position: relative; overflow: hidden; background: #080c16;">
-        <canvas id="mesh-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4;"></canvas>
+        <canvas id="mesh-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.35; pointer-events: none;"></canvas>
         <div class="hero-content" style="position: relative; z-index: 1;">
             <h1><span class="brand">Print</span> <span class="brand-accent">Точка</span> в <span class="city">Хабаровске</span></h1>
             <p>Уникальные подарки, подвижные игрушки, дизайнерские кашпо и сувениры на свадьбу. Настоящая экологичная FDM 3D-печать.</p>
@@ -624,6 +624,53 @@ background: var(--vk-color);
                 menu.style.pointerEvents = 'auto';
                 icon.innerText = '✕';
             }
+        }
+    // 5. АНИМАЦИЯ 3D-СЕТКИ
+        const canvas = document.getElementById('mesh-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let points = [];
+            const maxPoints = 40;
+            const maxDistance = 110;
+            
+            function resizeCanvas() {
+                const heroSection = canvas.parentElement;
+                canvas.width = heroSection.offsetWidth;
+                canvas.height = heroSection.offsetHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            for (let i = 0; i < maxPoints; i++) {
+                points.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4
+                });
+            }
+
+            function animateMesh() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                points.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+                    ctx.fillStyle = '#00f0ff'; ctx.fill();
+                });
+                for (let i = 0; i < points.length; i++) {
+                    for (let j = i + 1; j < points.length; j++) {
+                        const dist = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+                        if (dist < maxDistance) {
+                            ctx.beginPath(); ctx.moveTo(points[i].x, points[i].y); ctx.lineTo(points[j].x, points[j].y);
+                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - dist / maxDistance})`; ctx.lineWidth = 0.4; ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateMesh);
+            }
+            animateMesh();
         }
     </script>
 </body>
